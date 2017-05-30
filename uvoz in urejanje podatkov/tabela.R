@@ -206,7 +206,18 @@ uvozitabelaekip <- function(){
                   header=TRUE,
                   row.names=1,
                   na.string="-",
-                  fileEncoding = "Windows-1252"))
+                  fileEncoding = "UTF-8"))
 }
 tabelaekip<-uvozitabelaekip()
 
+#tabela dirkačev
+
+uvozitabeladirkacev <- function(){
+  return(read.csv("podatki/dirkači.csv",
+                  skip=0,
+                  header=TRUE,
+                  row.names=1,
+                  na.string="-",
+                  fileEncoding = "UTF-8"))
+}
+tabeladirkacev<-uvozitabeladirkacev()
