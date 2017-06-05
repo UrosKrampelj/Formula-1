@@ -2,5 +2,3 @@
 - https://www.formula1.com/en/results.html/2016/races.html
 - https://en.wikipedia.org/wiki/2016_Formula_One_season
 
-
-file:///C:/Users/EDO/Documents/Formula-1/ERdiagram/ERdiagram.png
