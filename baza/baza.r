@@ -2,7 +2,7 @@ library(RPostgreSQL)
 library(dplyr)
 
 #Uvoz:
-source("auth_public.r", encoding="UTF-8")
+source("auth.R", encoding="UTF-8")
 source("uvoz in urejanje podatkov/tabela.R", encoding="UTF-8")
 
 # Povezemo se z gonilnikom za PostgreSQL
