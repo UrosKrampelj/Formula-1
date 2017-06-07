@@ -4,7 +4,7 @@ library(dplyr)
 library(gsubfn)
 library(ggplot2)
 library(tidyr)
-
+library(readr)
 
 #tabele rezultatov posameznih dirk
 
@@ -196,7 +196,9 @@ tabelaGandPrix16[grep(",", tabelaGandPrix16[[1]]), 1] <- html_tabela %>%
 tabelaGandPrix16<- tabelaGandPrix16[-c(22),]
 tabelaGandPrix16<- separate(tabelaGandPrix16, Circuit, c("Circuit", "Town"), sep = ",", remove = TRUE,
                             convert = FALSE, extra = "warn", fill = "warn")
-
+colnames(tabelaGandPrix16) <- c("Round","Name","Circuit.Name","Town","Date")
+tabelaGandPrix16$Circuit.Length <- c("5.303", "5.412", "5.451","5.848", "4.655","3.337", "4.361","6.003", "4.326","5.891", "4.381", "4.574", "7.004", "5.793", "	5.065", "5.543", "5.807", "5.516", "4.304", "4.309", "5.554")
+tabelaGandPrix16$Laps <- c("58", "57", "56", "53", "66", "78", "70", "51", "71", "52", "70", "67", "44", "53", "61", "56", "53", "56", "71", "71", "55")
 
 #tabela ekip
 
@@ -220,4 +222,4 @@ uvozitabeladirkacev <- function(){
                   na.string="-",
                   fileEncoding = "UTF-8"))
 }
-tabeladirkacev<-uvozitabeladirkacev()
+tabeladirkacev<- uvozitabeladirkacev()
