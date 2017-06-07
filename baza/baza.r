@@ -63,11 +63,12 @@ create_table <- function(){
     
     #Glavne tabele
     driver <- dbSendQuery(conn,build_sql("CREATE TABLE driver (
-                                         car_number INTEGER PRIMARY KEY,
                                          name TEXT NOT NULL,
                                          surname TEXT NOT NULL,
+                                         car_number INTEGER PRIMARY KEY,
                                          age INTEGER NOT NULL,
                                          height INTEGER NOT NULL,
+                                         weight INTEGER NOT NULL
                                          country TEXT NOT NULL)"))
     
     team <- dbSendQuery(conn,build_sql("CREATE TABLE team (
@@ -88,15 +89,15 @@ create_table <- function(){
                                           laps INTEGER NOT NULL)"))
     
     result <- dbSendQuery(conn,build_sql("CREATE TABLE result (
-                                             car_number INTEGER REFERENCES driver(id),
+                                             car_number INTEGER REFERENCES driver(car_number),
                                              name TEXT REFERENCES driver(name),
-                                             surname TEXT REFERENCES driver(surname),    
+                                             surname TEXT REFERENCES driver(surname),
                                              start_position INTEGER NOT NULL,
                                              retired_in_lap INTEGER,
                                              time INTERVAL NOT NULL,
                                              position INTEGER NOT NULL,
                                              points INTEGER)"))
-    
+
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO jurez WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO urosk WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO domenh WITH GRANT OPTION"))
@@ -113,6 +114,24 @@ create_table <- function(){
 }
 
 
+#Funcija, ki vstavi podatke
+insert_data <- function(){
+  tryCatch({
+    conn <- dbConnect(drv, dbname = db, host = host,
+                      user = user, password = password)
+    
+    dbWriteTable(conn, name="driver", tabeladirkacev, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="team", tabelaekip, append=T, row.names=FALSE)
+    
+    
+  }, finally = {
+    dbDisconnect(conn) 
+    
+  })
+}
+
 delete_table()
 pravice()
 create_table()
+insert_data()
+
