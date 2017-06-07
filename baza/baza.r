@@ -121,8 +121,11 @@ insert_data <- function(){
                       user = user, password = password)
     
     dbWriteTable(conn, name="driver", tabeladirkacev, append=T, row.names=FALSE)
+<<<<<<< HEAD
     dbWriteTable(conn, name="team", tabelaekip, append=T, row.names=FALSE)
     
+=======
+>>>>>>> b5eb9211401cab3ee4cd1952e92926472af0b1e4
     
   }, finally = {
     dbDisconnect(conn) 
