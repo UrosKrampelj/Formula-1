@@ -93,7 +93,7 @@ create_table <- function(){
                                              surname TEXT REFERENCES driver(surname),    
                                              start_position INTEGER NOT NULL,
                                              retired_in_lap INTEGER,
-                                             time VARCHAR(11) NOT NULL,
+                                             time INTERVAL NOT NULL,
                                              position INTEGER NOT NULL,
                                              points INTEGER)"))
     
