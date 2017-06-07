@@ -20,7 +20,7 @@ delete_table <- function(){
     # ki se navezujejo na druge
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS driver"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS team"))
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS result_driver"))
+    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS result"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS grand_prix"))
     
   }, finally = {
@@ -84,7 +84,7 @@ create_table <- function(){
                                           circuit_name TEXT NOT NULL,
                                           town TEXT NOT NULL,
                                           date DATE NOT NULL,
-                                          circuit_length DECIMAL NOT NUL,
+                                          circuit_length DECIMAL NOT NULL,
                                           laps INTEGER NOT NULL)"))
     
     result <- dbSendQuery(conn,build_sql("CREATE TABLE result (
@@ -94,17 +94,9 @@ create_table <- function(){
                                              start_position INTEGER NOT NULL,
                                              retired_in_lap INTEGER,
                                              time VARCHAR(11) NOT NULL,
-                                             position INTEGER NOT NUL,
+                                             position INTEGER NOT NULL,
                                              points INTEGER)"))
     
-<<<<<<< HEAD
-=======
-    dbSendQuery(conn, build_sql("GRANT CONNECT ON DATABASE sem2017_jurez TO urosk WITH GRANT OPTION"))
-    dbSendQuery(conn, build_sql("GRANT CONNECT ON DATABASE sem2017_jurez TO domenh WITH GRANT OPTION"))
-    dbSendQuery(conn, build_sql("GRANT ALL ON SCHEMA public TO urosk WITH GRANT OPTION"))
-    dbSendQuery(conn, build_sql("GRANT ALL ON SCHEMA public TO domenh WITH GRANT OPTION"))
-    
->>>>>>> 98a8026719ca0719681762a108c5fdb9940bf285
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO jurez WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO urosk WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO domenh WITH GRANT OPTION"))
@@ -121,3 +113,6 @@ create_table <- function(){
 }
 
 
+delete_table()
+pravice()
+create_table()
