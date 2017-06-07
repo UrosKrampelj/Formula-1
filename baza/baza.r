@@ -68,7 +68,7 @@ create_table <- function(){
                                          car_number INTEGER PRIMARY KEY,
                                          age INTEGER NOT NULL,
                                          height INTEGER NOT NULL,
-                                         weight INTEGER NOT NULL
+                                         weight INTEGER NOT NULL,
                                          country TEXT NOT NULL)"))
     
     team <- dbSendQuery(conn,build_sql("CREATE TABLE team (
@@ -89,9 +89,7 @@ create_table <- function(){
                                           laps INTEGER NOT NULL)"))
     
     result <- dbSendQuery(conn,build_sql("CREATE TABLE result (
-                                             car_number INTEGER REFERENCES driver(car_number),
-                                             name TEXT REFERENCES driver(name),
-                                             surname TEXT REFERENCES driver(surname),
+                                             car INTEGER REFERENCES driver(car_number),
                                              start_position INTEGER NOT NULL,
                                              retired_in_lap INTEGER,
                                              time INTERVAL NOT NULL,
@@ -121,11 +119,8 @@ insert_data <- function(){
                       user = user, password = password)
     
     dbWriteTable(conn, name="driver", tabeladirkacev, append=T, row.names=FALSE)
-<<<<<<< HEAD
     dbWriteTable(conn, name="team", tabelaekip, append=T, row.names=FALSE)
-    
-=======
->>>>>>> b5eb9211401cab3ee4cd1952e92926472af0b1e4
+    dbWriteTable(conn, name="grand_prix", tabelaGandPrix16, append=T, row.names=FALSE)
     
   }, finally = {
     dbDisconnect(conn) 

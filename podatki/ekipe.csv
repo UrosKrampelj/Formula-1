@@ -1,12 +1,12 @@
-Name,Country,Constructor,Chassis,Power unit
-1,Scuderia Ferrari,Italy,Ferrari,SF16-H,Ferrari 061
-2,Sahara Force India Formula One Team,India,Force India-Mercedes,VJM09,Mercedes PU106C Hybrid
-3,Haas F1 Team,United States,Haas-Ferrari,VF-16,Ferrari 061
-4,McLaren Honda Formula 1 Team,United Kingdom,McLaren-Honda,MP4-31,Honda RA616H
-5,Mercedes AMG Petronas Formula One Team,Germany,Mercedes,F1 W07 Hybrid,Mercedes PU106C Hybrid
-6,Manor Racing MRT,United Kingdom,MRT-Mercedes,MRT05,Mercedes PU106C Hybrid
-7,Red Bull Racing,Austria,Red Bull Racing-TAG Heuer,RB12,TAG Heuer
-8,Renault Sport Formula One Team,France,Renault,R.S.16,Renault R.E.16
-9,Sauber F1 Team,Switzerland,Sauber-Ferrari,C35,Ferrari 061
-10,Scuderia Toro Rosso,Italy,Toro Rosso-Ferrari,STR11,Ferrari 060
-11,Williams Martini Racing,United Kingdom,Williams-Mercedes,FW38,Mercedes PU106C Hybrid
+Št,Name,Country,Constructor,Chassis,Power unit
+1,1,Scuderia Ferrari,Italy,Ferrari,SF16-H,Ferrari 061
+2,2,Sahara Force India Formula One Team,India,Force India-Mercedes,VJM09,Mercedes PU106C Hybrid
+3,3,Haas F1 Team,United States,Haas-Ferrari,VF-16,Ferrari 061
+4,4,McLaren Honda Formula 1 Team,United Kingdom,McLaren-Honda,MP4-31,Honda RA616H
+5,5,Mercedes AMG Petronas Formula One Team,Germany,Mercedes,F1 W07 Hybrid,Mercedes PU106C Hybrid
+6,6,Manor Racing MRT,United Kingdom,MRT-Mercedes,MRT05,Mercedes PU106C Hybrid
+7,7,Red Bull Racing,Austria,Red Bull Racing-TAG Heuer,RB12,TAG Heuer
+8,8,Renault Sport Formula One Team,France,Renault,R.S.16,Renault R.E.16
+9,9,Sauber F1 Team,Switzerland,Sauber-Ferrari,C35,Ferrari 061
+10,10,Scuderia Toro Rosso,Italy,Toro Rosso-Ferrari,STR11,Ferrari 060
+11,11,Williams Martini Racing,United Kingdom,Williams-Mercedes,FW38,Mercedes PU106C Hybrid
