@@ -97,6 +97,14 @@ create_table <- function(){
                                              position INTEGER NOT NUL,
                                              points INTEGER)"))
     
+<<<<<<< HEAD
+=======
+    dbSendQuery(conn, build_sql("GRANT CONNECT ON DATABASE sem2017_jurez TO urosk WITH GRANT OPTION"))
+    dbSendQuery(conn, build_sql("GRANT CONNECT ON DATABASE sem2017_jurez TO domenh WITH GRANT OPTION"))
+    dbSendQuery(conn, build_sql("GRANT ALL ON SCHEMA public TO urosk WITH GRANT OPTION"))
+    dbSendQuery(conn, build_sql("GRANT ALL ON SCHEMA public TO domenh WITH GRANT OPTION"))
+    
+>>>>>>> 98a8026719ca0719681762a108c5fdb9940bf285
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO jurez WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO urosk WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO domenh WITH GRANT OPTION"))
