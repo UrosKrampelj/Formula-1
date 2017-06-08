@@ -88,7 +88,7 @@ create_table <- function(){
                                              circuit_length DECIMAL NOT NULL,
                                              laps INTEGER NOT NULL)"))
     
-    result <- dbSendQuery(conn,build_sql("CREATE TABLE has (
+    has <- dbSendQuery(conn,build_sql("CREATE TABLE has (
                                          team_id INTEGER NOT NULL REFERENCES team(id),
                                          team_driver INTEGER NOT NULL REFERENCES driver(car_number),
                                          CHECK (team_id <> team_driver))"))
@@ -139,3 +139,26 @@ create_table()
 insert_data()
 
 con <- src_postgres(dbname = db, host = host, user = user, password = password)
+# 
+# #relacija has
+# tbl.team <- tbl(con, "team")
+# data.has <- inner_join(team
+#                             tbl.team %>% select(id, name),
+#                             copy = TRUE) %>%
+#   select(driver, team_driver = religion_id,name,surname)
+#   
+# #Funkcija, ki vstavi relacije
+# insert_relation_data <- function(){
+#   tryCatch({
+#     conn <- dbConnect(drv, dbname = db, host = host,
+#                       user = user, password = password)
+#     dbWriteTable(conn, name="has", data.has, append=T, row.names=FALSE)
+#    
+#   }, finally = {
+#     dbDisconnect(conn) 
+#     
+#   })
+# }
+# 
+# insert_relation_data()
+
