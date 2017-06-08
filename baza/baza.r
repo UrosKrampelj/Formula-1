@@ -18,11 +18,11 @@ delete_table <- function(){
     
     # Če tabela obstaja, jo zbrišemo, ter najprej zbrišemo tiste,
     # ki se navezujejo na druge
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS driver"))
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS team"))
+    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS driver CASCADE"))
+    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS team CASCADE"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS result"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS grand_prix"))
-    
+    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS has"))
   }, finally = {
     dbDisconnect(conn)
   })
@@ -42,7 +42,7 @@ pravice <- function(){
     dbSendQuery(conn, build_sql("GRANT ALL ON SCHEMA public TO urosk WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON SCHEMA public TO domenh WITH GRANT OPTION"))
     
-  
+    
   }, finally = {
     # Na koncu nujno prekinemo povezavo z bazo,
     # saj preveč odprtih povezav ne smemo imeti
@@ -72,38 +72,43 @@ create_table <- function(){
                                          country TEXT NOT NULL)"))
     
     team <- dbSendQuery(conn,build_sql("CREATE TABLE team (
-                                          id INTEGER PRIMARY KEY,
-                                          name TEXT NOT NULL UNIQUE,
-                                          country TEXT NOT NULL,
-                                          constructor TEXT NOT NULL,
-                                          chassis VARCHAR(13) NOT NULL UNIQUE,
-                                          power_unit VARCHAR(22) NOT NULL)"))
+                                       id INTEGER PRIMARY KEY,
+                                       name TEXT NOT NULL UNIQUE,
+                                       country TEXT NOT NULL,
+                                       constructor TEXT NOT NULL,
+                                       chassis VARCHAR(13) NOT NULL UNIQUE,
+                                       power_unit VARCHAR(22) NOT NULL)"))
     
     grand_prix <- dbSendQuery(conn,build_sql("CREATE TABLE grand_prix (
-                                          round INTEGER PRIMARY KEY,
-                                          name TEXT NOT NULL UNIQUE,
-                                          circuit_name TEXT NOT NULL,
-                                          town TEXT NOT NULL,
-                                          date DATE NOT NULL,
-                                          circuit_length DECIMAL NOT NULL,
-                                          laps INTEGER NOT NULL)"))
+                                             round INTEGER PRIMARY KEY,
+                                             name TEXT NOT NULL UNIQUE,
+                                             circuit_name TEXT NOT NULL,
+                                             town TEXT NOT NULL,
+                                             date DATE NOT NULL,
+                                             circuit_length DECIMAL NOT NULL,
+                                             laps INTEGER NOT NULL)"))
+    
+    result <- dbSendQuery(conn,build_sql("CREATE TABLE has (
+                                         team_id INTEGER NOT NULL REFERENCES team(id),
+                                         team_driver INTEGER NOT NULL REFERENCES driver(car_number),
+                                         CHECK (team_id <> team_driver))"))
     
     result <- dbSendQuery(conn,build_sql("CREATE TABLE result (
-                                             car INTEGER REFERENCES driver(car_number),
-                                             start_position INTEGER NOT NULL,
-                                             retired_in_lap INTEGER,
-                                             time INTERVAL NOT NULL,
-                                             position INTEGER NOT NULL,
-                                             points INTEGER)"))
-
+                                         car INTEGER REFERENCES driver(car_number),
+                                         start_position INTEGER NOT NULL,
+                                         retired_in_lap INTEGER,
+                                         time INTERVAL NOT NULL,
+                                         position INTEGER NOT NULL,
+                                         points INTEGER)"))
+    
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO jurez WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO urosk WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO domenh WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO jurez WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO urosk WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO domenh WITH GRANT OPTION"))
-  
-    }, finally = {
+    
+  }, finally = {
     # Na koncu nujno prekinemo povezavo z bazo,
     # saj preveč odprtih povezav ne smemo imeti
     dbDisconnect(conn) #PREKINEMO POVEZAVO
@@ -133,3 +138,4 @@ pravice()
 create_table()
 insert_data()
 
+con <- src_postgres(dbname = db, host = host, user = user, password = password)
