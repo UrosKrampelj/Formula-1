@@ -20,9 +20,8 @@ delete_table <- function(){
     # ki se navezujejo na druge
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS driver CASCADE"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS team CASCADE"))
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS results_AbuDhabi"))
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS result"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS grand_prix"))
+    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS result"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS has"))
   }, finally = {
     dbDisconnect(conn)
@@ -137,8 +136,15 @@ insert_data <- function(){
     dbWriteTable(conn, name="driver", tabeladirkacev, append=T, row.names=FALSE)
     dbWriteTable(conn, name="team", tabelaekip, append=T, row.names=FALSE)
     dbWriteTable(conn, name="grand_prix", tabelaGandPrix16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results_AbuDhabi", tabelaAbuDhabi16, append=T, row.names=FALSE)
-    
+    dbWriteTable(conn, name="result", tabelaAbuDhabi16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="result", tabelaAvstralija16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="result", tabelaBahrain16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="result", tabelaAbuDhabi16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="result", tabelaAbuDhabi16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="result", tabelaAbuDhabi16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="result", tabelaAbuDhabi16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="result", tabelaAbuDhabi16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="result", tabelaAbuDhabi16, append=T, row.names=FALSE)
   }, finally = {
     dbDisconnect(conn) 
     
