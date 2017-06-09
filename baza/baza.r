@@ -20,6 +20,7 @@ delete_table <- function(){
     # ki se navezujejo na druge
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS driver CASCADE"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS team CASCADE"))
+    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS results_AbuDhabi"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS result"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS grand_prix"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS has"))
@@ -88,6 +89,16 @@ create_table <- function(){
                                              circuit_length DECIMAL NOT NULL,
                                              laps INTEGER NOT NULL)"))
     
+    results_AbuDhabi <- dbSendQuery(conn,build_sql("CREATE TABLE results_AbuDhabi (
+                                             pos VARCHAR(2) NOT NULL,
+                                             no INTEGER NOT NULL REFERENCES driver(car_number),
+                                             name TEXT NOT NULL,
+                                             surname TEXT NOT NULL,
+                                             car TEXT NOT NULL,
+                                             laps_made INTEGER NOT NULL,
+                                             time_retired VARCHAR(11) NOT NULL,
+                                             pts INTEGER NOT NULL)"))
+    
     has <- dbSendQuery(conn,build_sql("CREATE TABLE has (
                                          team_id INTEGER NOT NULL REFERENCES team(id),
                                          team_driver INTEGER NOT NULL REFERENCES driver(car_number),
@@ -97,7 +108,7 @@ create_table <- function(){
                                          car INTEGER REFERENCES driver(car_number),
                                          start_position INTEGER NOT NULL,
                                          retired_in_lap INTEGER,
-                                         time INTERVAL NOT NULL,
+                                         time VARCHAR(11) NOT NULL,
                                          position INTEGER NOT NULL,
                                          points INTEGER)"))
     
@@ -126,6 +137,7 @@ insert_data <- function(){
     dbWriteTable(conn, name="driver", tabeladirkacev, append=T, row.names=FALSE)
     dbWriteTable(conn, name="team", tabelaekip, append=T, row.names=FALSE)
     dbWriteTable(conn, name="grand_prix", tabelaGandPrix16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="results_AbuDhabi", tabelaAbuDhabi16, append=T, row.names=FALSE)
     
   }, finally = {
     dbDisconnect(conn) 
@@ -139,24 +151,24 @@ create_table()
 insert_data()
 
 con <- src_postgres(dbname = db, host = host, user = user, password = password)
-# 
+
 # #relacija has
 # tbl.team <- tbl(con, "team")
 # data.has <- inner_join(team
 #                             tbl.team %>% select(id, name),
 #                             copy = TRUE) %>%
 #   select(driver, team_driver = religion_id,name,surname)
-#   
+# 
 # #Funkcija, ki vstavi relacije
 # insert_relation_data <- function(){
 #   tryCatch({
 #     conn <- dbConnect(drv, dbname = db, host = host,
 #                       user = user, password = password)
 #     dbWriteTable(conn, name="has", data.has, append=T, row.names=FALSE)
-#    
+# 
 #   }, finally = {
-#     dbDisconnect(conn) 
-#     
+#     dbDisconnect(conn)
+# 
 #   })
 # }
 # 
