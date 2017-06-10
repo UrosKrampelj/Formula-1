@@ -6,7 +6,7 @@ library(ggplot2)
 library(tidyr)
 library(readr)
 
-#tabele rezultatov posameznih dirk
+#tabela zmagovalcev
 
 htmlZmagovalci16 <- html_session("https://www.formula1.com/en/results.html/2016/races/94/great-britain/race-result.html") %>% read_html
 html_tabelaZmagovalci16 <- htmlZmagovalci16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -16,6 +16,7 @@ tabelaZmagovalci16 <- separate(tabelaZmagovalci16, Winner, c("Name", "Surname", 
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaZmagovalci16 <- tabelaZmagovalci16[-c(5)]
 
+#tabele rezultatov posameznih dirk
 htmlAvstralija16 <- html_session("https://www.formula1.com/en/results.html/2016/races/938/australia.html") %>% read_html
 html_tabelaAvstralija16 <- htmlAvstralija16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
 tabelaAvstralija16 <- html_tabelaAvstralija16%>% html_table()
@@ -23,6 +24,7 @@ tabelaAvstralija16 <-tabelaAvstralija16[2:8]
 tabelaAvstralija16 <- separate(tabelaAvstralija16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaAvstralija16 <- tabelaAvstralija16[-c(5)]
+tabelaAvstralija16$Circuit <- rep("Australia",nrow(tabelaAvstralija16))
 
 htmlBahrain16 <- html_session("https://www.formula1.com/en/results.html/2016/races/939/bahrain/race-result.html") %>% read_html
 html_tabelaBahrain16 <- htmlBahrain16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -31,6 +33,7 @@ tabelaBahrain16 <-tabelaBahrain16[2:8]
 tabelaBahrain16 <- separate(tabelaBahrain16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaBahrain16 <- tabelaBahrain16[-c(5)]
+tabelaBahrain16$Circuit <- rep("Bahrain",nrow(tabelaBahrain16))
 
 htmlChina16 <- html_session("https://www.formula1.com/en/results.html/2016/races/940/china/race-result.html") %>% read_html
 html_tabelaChina16 <- htmlChina16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -39,6 +42,7 @@ tabelaChina16 <-tabelaChina16[2:8]
 tabelaChina16 <- separate(tabelaChina16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaChina16 <- tabelaChina16[-c(5)]
+tabelaChina16$Circuit <- rep("China",nrow(tabelaChina16))
 
 htmlRussia16 <- html_session("https://www.formula1.com/en/results.html/2016/races/942/spain/race-result.html") %>% read_html
 html_tabelaRussia16 <- htmlRussia16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -47,6 +51,7 @@ tabelaRussia16 <-tabelaRussia16[2:8]
 tabelaRussia16 <- separate(tabelaRussia16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaRussia16 <- tabelaRussia16[-c(5)]
+tabelaRussia16$Circuit <- rep("Russia",nrow(tabelaRussia16))
 
 htmlSpain16 <- html_session("https://www.formula1.com/en/results.html/2016/races/941/russia/race-result.html") %>% read_html
 html_tabelaSpain16 <- htmlSpain16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -55,6 +60,7 @@ tabelaSpain16 <-tabelaSpain16[2:8]
 tabelaSpain16 <- separate(tabelaSpain16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaSpain16 <- tabelaSpain16[-c(5)]
+tabelaSpain16$Circuit <- rep("Spain",nrow(tabelaSpain16))
 
 htmlMonaco16 <- html_session("https://www.formula1.com/en/results.html/2016/races/943/monaco/race-result.html") %>% read_html
 html_tabelaMonaco16 <- htmlMonaco16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -63,6 +69,7 @@ tabelaMonaco16 <-tabelaMonaco16[2:8]
 tabelaMonaco16 <- separate(tabelaMonaco16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaMonaco16 <- tabelaMonaco16[-c(5)]
+tabelaMonaco16$Circuit <- rep("Monaco",nrow(tabelaMonaco16))
 
 htmlCanada16 <- html_session("https://www.formula1.com/en/results.html/2016/races/943/monaco/race-result.html") %>% read_html
 html_tabelaCanada16 <- htmlCanada16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -71,6 +78,7 @@ tabelaCanada16 <-tabelaCanada16[2:8]
 tabelaCanada16 <- separate(tabelaCanada16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaCanada16 <- tabelaCanada16[-c(5)]
+tabelaCanada16$Circuit <- rep("Canada",nrow(tabelaCanada16))
 
 htmlEurope16 <- html_session("https://www.formula1.com/en/results.html/2016/races/958/europe/race-result.html") %>% read_html
 html_tabelaEurope16 <- htmlEurope16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -79,6 +87,7 @@ tabelaEurope16 <-tabelaEurope16[2:8]
 tabelaEurope16 <- separate(tabelaEurope16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaEurope16 <- tabelaEurope16[-c(5)]
+tabelaEurope16$Circuit <- rep("Europe",nrow(tabelaEurope16))
 
 htmlAustria16 <- html_session("https://www.formula1.com/en/results.html/2016/races/945/austria/race-result.html") %>% read_html
 html_tabelaAustria16 <- htmlAustria16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -87,6 +96,7 @@ tabelaAustria16 <-tabelaAustria16[2:8]
 tabelaAustria16 <- separate(tabelaAustria16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaAustria16 <- tabelaAustria16[-c(5)]
+tabelaAustria16$Circuit <- rep("Austria",nrow(tabelaAustria16))
 
 htmlGreatBritain16 <- html_session("https://www.formula1.com/en/results.html/2016/races/946/great-britain/race-result.html") %>% read_html
 html_tabelaGreatBritain16 <- htmlGreatBritain16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -95,6 +105,7 @@ tabelaGreatBritain16 <-tabelaGreatBritain16[2:8]
 tabelaGreatBritain16 <- separate(tabelaGreatBritain16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaGreatBritain16 <- tabelaGreatBritain16[-c(5)]
+tabelaGreatBritain16$Circuit <- rep("GreatBritain",nrow(tabelaGreatBritain16))
 
 htmlHungary16 <- html_session("https://www.formula1.com/en/results.html/2016/races/947/hungary/race-result.html") %>% read_html
 html_tabelaHungary16 <- htmlHungary16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -103,6 +114,7 @@ tabelaHungary16 <-tabelaHungary16[2:8]
 tabelaHungary16 <- separate(tabelaHungary16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaHungary16 <- tabelaHungary16[-c(5)]
+tabelaHungary16$Circuit <- rep("Hungary",nrow(tabelaHungary16))
 
 htmlGermany16 <- html_session("https://www.formula1.com/en/results.html/2016/races/948/germany/race-result.html") %>% read_html
 html_tabelaGermany16 <- htmlGermany16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -111,6 +123,7 @@ tabelaGermany16 <-tabelaGermany16[2:8]
 tabelaGermany16 <- separate(tabelaGermany16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaGermany16 <- tabelaGermany16[-c(5)]
+tabelaGermany16$Circuit <- rep("Germany",nrow(tabelaGermany16))
 
 htmlBelgium16 <- html_session("https://www.formula1.com/en/results.html/2016/races/949/belgium/race-result.html") %>% read_html
 html_tabelaBelgium16 <- htmlBelgium16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -119,6 +132,7 @@ tabelaBelgium16 <-tabelaBelgium16[2:8]
 tabelaBelgium16 <- separate(tabelaBelgium16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaBelgium16 <- tabelaBelgium16[-c(5)]
+tabelaBelgium16$Circuit <- rep("Belgium",nrow(tabelaBelgium16))
 
 htmlItaly16 <- html_session("https://www.formula1.com/en/results.html/2016/races/950/italy/race-result.html") %>% read_html
 html_tabelaItaly16 <- htmlItaly16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -127,6 +141,7 @@ tabelaItaly16 <-tabelaItaly16[2:8]
 tabelaItaly16 <- separate(tabelaItaly16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaItaly16 <- tabelaItaly16[-c(5)]
+tabelaItaly16$Circuit <- rep("Italy",nrow(tabelaItaly16))
 
 htmlSingapore16 <- html_session("https://www.formula1.com/en/results.html/2016/races/951/singapore/race-result.html") %>% read_html
 html_tabelaSingapore16 <- htmlSingapore16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -135,6 +150,7 @@ tabelaSingapore16 <-tabelaSingapore16[2:8]
 tabelaSingapore16 <- separate(tabelaSingapore16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaSingapore16 <- tabelaSingapore16[-c(5)]
+tabelaSingapore16$Circuit <- rep("Singapore",nrow(tabelaSingapore16))
 
 htmlMalaysia16 <- html_session("https://www.formula1.com/en/results.html/2016/races/952/malaysia/race-result.html") %>% read_html
 html_tabelaMalaysia16 <- htmlMalaysia16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -143,6 +159,7 @@ tabelaMalaysia16 <-tabelaMalaysia16[2:8]
 tabelaMalaysia16 <- separate(tabelaMalaysia16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaMalaysia16 <- tabelaMalaysia16[-c(5)]
+tabelaMalaysia16$Circuit <- rep("Malaysia",nrow(tabelaMalaysia16))
 
 htmlJapan16 <- html_session("https://www.formula1.com/en/results.html/2016/races/953/japan/race-result.html") %>% read_html
 html_tabelaJapan16 <- htmlJapan16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -151,6 +168,7 @@ tabelaJapan16 <-tabelaJapan16[2:8]
 tabelaJapan16 <- separate(tabelaJapan16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaJapan16 <- tabelaJapan16[-c(5)]
+tabelaJapan16$Circuit <- rep("Japan",nrow(tabelaJapan16))
 
 htmlUnitedStates16 <- html_session("https://www.formula1.com/en/results.html/2016/races/954/united-states/race-result.html") %>% read_html
 html_tabelaUnitedStates16 <- htmlUnitedStates16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -159,6 +177,7 @@ tabelaUnitedStates16 <-tabelaUnitedStates16[2:8]
 tabelaUnitedStates16 <- separate(tabelaUnitedStates16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaUnitedStates16 <- tabelaUnitedStates16[-c(5)]
+tabelaUnitedStates16$Circuit <- rep("UnitedStates",nrow(tabelaUnitedStates16))
 
 htmlMexico16 <- html_session("https://www.formula1.com/en/results.html/2016/races/955/mexico/race-result.html") %>% read_html
 html_tabelaMexico16 <- htmlMexico16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -167,6 +186,7 @@ tabelaMexico16 <-tabelaMexico16[2:8]
 tabelaMexico16 <- separate(tabelaMexico16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaMexico16 <- tabelaMexico16[-c(5)]
+tabelaMexico16$Circuit <- rep("Mexico",nrow(tabelaMexico16))
 
 htmlBrazil16 <- html_session("https://www.formula1.com/en/results.html/2016/races/956/brazil/race-result.html") %>% read_html
 html_tabelaBrazil16 <- htmlBrazil16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -175,6 +195,7 @@ tabelaBrazil16 <-tabelaBrazil16[2:8]
 tabelaBrazil16 <- separate(tabelaBrazil16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaBrazil16 <- tabelaBrazil16[-c(5)]
+tabelaBrazil16$Circuit <- rep("Brazil",nrow(tabelaBrazil16))
 
 htmlAbuDhabi16 <- html_session("https://www.formula1.com/en/results.html/2016/races/957/abu-dhabi/race-result.html") %>% read_html
 html_tabelaAbuDhabi16 <- htmlAbuDhabi16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
@@ -183,6 +204,7 @@ tabelaAbuDhabi16 <-tabelaAbuDhabi16[2:8]
 tabelaAbuDhabi16 <- separate(tabelaAbuDhabi16, Driver, c("Name", "Surname", "Short"), sep = "\n", remove = TRUE,
          convert = FALSE, extra = "warn", fill = "warn")
 tabelaAbuDhabi16 <- tabelaAbuDhabi16[-c(5)]
+tabelaAbuDhabi16$Circuit <- rep("AbuDhabi",nrow(tabelaAbuDhabi16))
 
 
 #tabela grand prix-ov
