@@ -206,6 +206,12 @@ tabelaAbuDhabi16 <- separate(tabelaAbuDhabi16, Driver, c("Name", "Surname", "Sho
 tabelaAbuDhabi16 <- tabelaAbuDhabi16[-c(5)]
 tabelaAbuDhabi16$Circuit <- rep("AbuDhabi",nrow(tabelaAbuDhabi16))
 
+#združene tabele rezultatov
+ultimatetabela <- rbind(tabelaAvstralija16, tabelaBahrain16, tabelaChina16, tabelaRussia16, tabelaSpain16, tabelaMonaco16, 
+                        tabelaCanada16, tabelaEurope16, tabelaAustria16, tabelaGreatBritain16, tabelaHungary16, tabelaGermany16,
+                        tabelaBelgium16, tabelaItaly16, tabelaSingapore16, tabelaMalaysia16, tabelaJapan16, tabelaUnitedStates16, 
+                        tabelaMexico16, tabelaBrazil16, tabelaAbuDhabi16)
+
 
 #tabela grand prix-ov
 
