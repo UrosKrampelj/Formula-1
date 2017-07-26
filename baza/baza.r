@@ -81,8 +81,8 @@ create_table <- function(){
                                          age INTEGER NOT NULL,
                                          height INTEGER NOT NULL,
                                          weight INTEGER NOT NULL,
-                                         country TEXT NOT NULL,
-                                         team_id INTEGER NOT NULL REFERENCES team(id))"))
+                                         country TEXT NOT NULL
+                                         )"))
     
     grand_prix <- dbSendQuery(conn,build_sql("CREATE TABLE grand_prix (
                                              round INTEGER PRIMARY KEY,
@@ -111,6 +111,8 @@ create_table <- function(){
                                          points INTEGER,
                                          circuit TEXT NOT NULL,
                                          start_position INTEGER NOT NULL)"))
+    
+    
     
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO jurez WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL TABLES IN SCHEMA public TO urosk WITH GRANT OPTION"))
@@ -173,10 +175,14 @@ con <- src_postgres(dbname = db, host = host, user = user, password = password)
 
 #relacija has
 tbl.driver <- tbl(con, "driver")
-data.has <- _join(team,
-  tbl.team %>% select(id, name),
-                            copy = TRUE) %>%
-  select(id,name,surname team_driver = religion_id,name,surname)
+tbl.team <- tbl(con, "team")
+tbl.results <- tbl(con,"results")
+data.has <- tbl.driver %>% select(car_number, name, surname)%>% 
+                       inner_join(tbl.results %>% select(car_number, car),
+                                  by=c("car_number"="car_number"),copy = TRUE)%>% 
+                       inner_join(tbl.team%>% select(id,constructor),
+                                  by=c("car"="constructor"),copy = TRUE) %>%
+  select(team,driver)
 
 #Funkcija, ki vstavi relacije
 insert_relation_data <- function(){
