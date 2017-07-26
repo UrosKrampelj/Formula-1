@@ -81,8 +81,8 @@ create_table <- function(){
                                          age INTEGER NOT NULL,
                                          height INTEGER NOT NULL,
                                          weight INTEGER NOT NULL,
-                                         country TEXT NOT NULL,
-                                         team_id INTEGER NOT NULL REFERENCES team(id))"))
+                                         country TEXT NOT NULL
+                                         )"))
     
     grand_prix <- dbSendQuery(conn,build_sql("CREATE TABLE grand_prix (
                                              round INTEGER PRIMARY KEY,
@@ -173,10 +173,12 @@ con <- src_postgres(dbname = db, host = host, user = user, password = password)
 
 #relacija has
 tbl.driver <- tbl(con, "driver")
-data.has <- _join(team,
-  tbl.team %>% select(id, name),
+tbl.team <- tbl(con, "team")
+tbl.results <- tbl(con,"results")
+data.has <- inner_join(tbl.driver %>% select(car_number, name, surname), tbl.results %>% select(car_number, car),
+                       tbl.team%>% select(id,constructor),
                             copy = TRUE) %>%
-  select(id,name,surname team_driver = religion_id,name,surname)
+  select(team,team=id,driver,driver=car_number)
 
 #Funkcija, ki vstavi relacije
 insert_relation_data <- function(){
