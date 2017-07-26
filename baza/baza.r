@@ -177,12 +177,19 @@ con <- src_postgres(dbname = db, host = host, user = user, password = password)
 tbl.driver <- tbl(con, "driver")
 tbl.team <- tbl(con, "team")
 tbl.results <- tbl(con,"results")
+<<<<<<< HEAD
 data.has <- tbl.driver %>% select(car_number, name, surname)%>% 
                        inner_join(tbl.results %>% select(car_number, car),
                                   by=c("car_number"="car_number"),copy = TRUE)%>% 
                        inner_join(tbl.team%>% select(id,constructor),
                                   by=c("car"="constructor"),copy = TRUE) %>%
   select(team,driver)
+=======
+data.has <- inner_join(tbl.driver %>% select(car_number, name, surname), tbl.results %>% select(car_number, car),
+                       tbl.team%>% select(id,constructor),
+                            copy = TRUE) %>%
+  select(team,team=id,driver,driver=car_number)
+>>>>>>> fd518ecf922b99ec3855a5fd69ab095f4fe0f17d
 
 #Funkcija, ki vstavi relacije
 insert_relation_data <- function(){
