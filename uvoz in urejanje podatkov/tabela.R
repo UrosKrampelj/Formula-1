@@ -238,17 +238,17 @@ ultimatetabela <- rbind(tabelaAvstralija16, tabelaBahrain16, tabelaChina16, tabe
 
 html <- html_session("https://en.wikipedia.org/wiki/2016_Formula_One_season") %>% read_html()
 html_tabela <- html %>% html_nodes(xpath="//table[3]") %>% .[[1]]
-tabelaGandPrix16 <- html_tabela %>% html_table()
-tabelaGandPrix16[grep(",", tabelaGandPrix16[[1]]), 1] <- html_tabela %>%
+tabelaGrandPrix16 <- html_tabela %>% html_table()
+tabelaGrandPrix16[grep(",", tabelaGrandPrix16[[1]]), 1] <- html_tabela %>%
   html_nodes(xpath="//span[@class='vcard']//a[@title]") %>%
   html_text()
-tabelaGandPrix16<- tabelaGandPrix16[-c(22),]
-tabelaGandPrix16<- separate(tabelaGandPrix16, Circuit, c("Circuit", "Town"), sep = ",", remove = TRUE,
+tabelaGrandPrix16<- tabelaGrandPrix16[-c(22),]
+tabelaGrandPrix16<- separate(tabelaGrandPrix16, Circuit, c("Circuit", "Town"), sep = ",", remove = TRUE,
                             convert = FALSE, extra = "warn", fill = "warn")
-colnames(tabelaGandPrix16) <- c("Round","Name","Circuit.Name","Town","Date")
-tabelaGandPrix16$Circuit.Length <- c("5.303", "5.412", "5.451","5.848", "4.655","3.337", "4.361","6.003", "4.326","5.891", "4.381", "4.574", "7.004", "5.793", "	5.065", "5.543", "5.807", "5.516", "4.304", "4.309", "5.554")
-tabelaGandPrix16$Laps <- c("58", "57", "56", "53", "66", "78", "70", "51", "71", "52", "70", "67", "44", "53", "61", "56", "53", "56", "71", "71", "55")
-tabelaGandPrix16$Date<- c("20.3.2016", "3.4.2016", "17.4.2016", "1.5.2016", "15.5.2016", "29.5.2016", "12.6.2016", "16.6.2016", "3.7.2016", "10.7.2016", "24.7.2016", "31.7.2016", "28.8.2016", "4.9.2016", "18.9.2016", "2.10.2016", "9.10.2016", "23.10.2016", "30.10.2016", "13.11.2016", "27.11.2016")
+colnames(tabelaGrandPrix16) <- c("Round","Name","Circuit.Name","Town","Date")
+tabelaGrandPrix16$Circuit.Length <- c("5.303", "5.412", "5.451","5.848", "4.655","3.337", "4.361","6.003", "4.326","5.891", "4.381", "4.574", "7.004", "5.793", "	5.065", "5.543", "5.807", "5.516", "4.304", "4.309", "5.554")
+tabelaGrandPrix16$Laps <- c("58", "57", "56", "53", "66", "78", "70", "51", "71", "52", "70", "67", "44", "53", "61", "56", "53", "56", "71", "71", "55")
+tabelaGrandPrix16$Date<- c("20.3.2016", "3.4.2016", "17.4.2016", "1.5.2016", "15.5.2016", "29.5.2016", "12.6.2016", "16.6.2016", "3.7.2016", "10.7.2016", "24.7.2016", "31.7.2016", "28.8.2016", "4.9.2016", "18.9.2016", "2.10.2016", "9.10.2016", "23.10.2016", "30.10.2016", "13.11.2016", "27.11.2016")
 
 #tabela ekip
 
