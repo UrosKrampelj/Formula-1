@@ -88,7 +88,7 @@ create_table <- function(){
                                              circuit_length DECIMAL NOT NULL,
                                              laps INTEGER NOT NULL)"))
     
-    results_AbuDhabi <- dbSendQuery(conn,build_sql("CREATE TABLE results_AbuDhabi (
+    results_abudhabi <- dbSendQuery(conn,build_sql("CREATE TABLE results_AbuDhabi (
                                              pos VARCHAR(2) NOT NULL,
                                              no INTEGER NOT NULL REFERENCES driver(car_number),
                                              name TEXT NOT NULL,
@@ -99,9 +99,10 @@ create_table <- function(){
                                              pts INTEGER NOT NULL)"))
     
     has <- dbSendQuery(conn,build_sql("CREATE TABLE has (
-                                         team_id INTEGER NOT NULL REFERENCES team(id),
-                                         team_driver INTEGER NOT NULL REFERENCES driver(car_number),
-                                         CHECK (team_id <> team_driver))"))
+                                         team INTEGER NOT NULL REFERENCES team(id),
+                                         driver INTEGER NOT NULL REFERENCES driver(car_number),
+                                         PRIMARY KEY (team ,driver)
+                                         CHECK (team <> driver))"))
     
     result <- dbSendQuery(conn,build_sql("CREATE TABLE result (
                                          car INTEGER REFERENCES driver(car_number),
