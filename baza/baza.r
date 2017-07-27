@@ -1,5 +1,6 @@
 library(RPostgreSQL)
 library(dplyr)
+library(dbplyr)
 
 #Uvoz:
 source("auth.R", encoding="UTF-8")
@@ -20,12 +21,11 @@ delete_table <- function(){
     # ki se navezujejo na druge
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS driver CASCADE"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS team CASCADE"))
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS grand_prix"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS results"))
+    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS grand_prix"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS result"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS has"))
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS results_abudhabi "))
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS results_AbuDhabi "))
+    dbSendQuery(conn,build_sql('DROP TABLE IF EXISTS "results_AbuDhabi" '))
   }, finally = {
     dbDisconnect(conn)
   })
@@ -97,19 +97,15 @@ create_table <- function(){
     has <- dbSendQuery(conn,build_sql("CREATE TABLE has (
                                          team INTEGER NOT NULL REFERENCES team(id),
                                          driver INTEGER NOT NULL REFERENCES driver(car_number),
-                                         PRIMARY KEY (team,driver),
-                                         CHECK (team <> driver))"))
+                                         PRIMARY KEY (team,driver))"))
     
     results <- dbSendQuery(conn,build_sql("CREATE TABLE results (
                                          position VARCHAR(2) NOT NULL,
                                          car_number INTEGER REFERENCES driver(car_number),
-                                         name TEXT NOT NULL,
-                                         surname TEXT NOT NULL,
-                                         car TEXT NOT NULL,
                                          laps INTEGER,
                                          time VARCHAR(11) NOT NULL,
                                          points INTEGER,
-                                         circuit TEXT NOT NULL,
+                                         grand_prix INTEGER REFERENCES grand_prix(round),
                                          start_position INTEGER NOT NULL)"))
     
     
@@ -138,28 +134,9 @@ insert_data <- function(){
     
     dbWriteTable(conn, name="driver", tabeladirkacev, append=T, row.names=FALSE)
     dbWriteTable(conn, name="team", tabelaekip, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="grand_prix", tabelaGandPrix16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaAustria16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaBahrain16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaChina16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaRussia16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaSpain16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaMonaco16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaCanada16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaEurope16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaAustria16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaGreatBritain16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaHungary16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaGermany16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaBelgium16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaItaly16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaSingapore16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaMalaysia16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaJapan16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaUnitedStates16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaMexico16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaBrazil16, append=T, row.names=FALSE)
-    dbWriteTable(conn, name="results", tabelaAbuDhabi16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="grand_prix", tabelaGrandPrix16, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="results", ultimatetabela, append=T, row.names=FALSE)
+    dbWriteTable(conn, name="has", data.has, append=T, row.names=FALSE)
     }, finally = {
     dbDisconnect(conn) 
     
@@ -172,37 +149,3 @@ create_table()
 insert_data()
 
 con <- src_postgres(dbname = db, host = host, user = user, password = password)
-
-#relacija has
-tbl.driver <- tbl(con, "driver")
-tbl.team <- tbl(con, "team")
-tbl.results <- tbl(con,"results")
-<<<<<<< HEAD
-data.has <- tbl.driver %>% select(car_number, name, surname)%>% 
-                       inner_join(tbl.results %>% select(car_number, car),
-                                  by=c("car_number"="car_number"),copy = TRUE)%>% 
-                       inner_join(tbl.team%>% select(id,constructor),
-                                  by=c("car"="constructor"),copy = TRUE) %>%
-  select(team,driver)
-=======
-data.has <- inner_join(tbl.driver %>% select(car_number, name, surname), tbl.results %>% select(car_number, car),
-                       tbl.team%>% select(id,constructor),
-                            copy = TRUE) %>%
-  select(team,team=id,driver,driver=car_number)
->>>>>>> fd518ecf922b99ec3855a5fd69ab095f4fe0f17d
-
-#Funkcija, ki vstavi relacije
-insert_relation_data <- function(){
-  tryCatch({
-    conn <- dbConnect(drv, dbname = db, host = host,
-                      user = user, password = password)
-    dbWriteTable(conn, name="has", data.has, append=T, row.names=FALSE)
-
-  }, finally = {
-    dbDisconnect(conn)
-
-  })
-}
-
-insert_relation_data()
-
