@@ -100,7 +100,7 @@ create_table <- function(){
                                          PRIMARY KEY (team,driver))"))
     
     results <- dbSendQuery(conn,build_sql("CREATE TABLE results (
-                                         position VARCHAR(2) NOT NULL,
+                                         position INTEGER,
                                          car_number INTEGER REFERENCES driver(car_number),
                                          laps INTEGER,
                                          time VARCHAR(11) NOT NULL,
