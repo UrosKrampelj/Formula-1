@@ -17,12 +17,13 @@ shinyServer(function(input, output) {
   tbl.results <- tbl(conn, "results")
   tbl.has <- tbl(conn, "has")
   
-  output$st.dirk <- renderTable({
+  output$rezultati <- renderTable({
     
-    t <- tbl.results %>% filter(circuit <= input$st.dirk)
+    t <- tbl.results %>% filter(circuit <= input$st.dirk) %>% data.frame()
     validate(need(nrow(t) > 0, "Vaši poizvedbi ne ustreza noben podatek."))
     Encoding(t) <- "UTF-8"
     t
+    
   })
   
   

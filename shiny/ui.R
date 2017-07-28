@@ -18,7 +18,7 @@ shinyUI(fluidPage(
                ),
                
                mainPanel(
-                 tableOutput("output$st.dirk") 
+                 tableOutput("output$rezultati") 
                )
              )
     )
