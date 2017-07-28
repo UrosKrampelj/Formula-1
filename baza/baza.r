@@ -69,7 +69,7 @@ create_table <- function(){
     
     team <- dbSendQuery(conn,build_sql("CREATE TABLE team (
                                        id INTEGER PRIMARY KEY,
-                                       name TEXT NOT NULL UNIQUE,
+                                       team_name TEXT NOT NULL UNIQUE,
                                        country TEXT NOT NULL,
                                        constructor TEXT NOT NULL,
                                        chassis VARCHAR(13) NOT NULL UNIQUE,
@@ -87,9 +87,9 @@ create_table <- function(){
     
     grand_prix <- dbSendQuery(conn,build_sql("CREATE TABLE grand_prix (
                                              round INTEGER PRIMARY KEY,
-                                             name TEXT NOT NULL UNIQUE,
+                                             official_name TEXT NOT NULL UNIQUE,
+                                             name TEXT NOT NULL,
                                              circuit_name TEXT NOT NULL,
-                                             town TEXT NOT NULL,
                                              date DATE NOT NULL,
                                              circuit_length DECIMAL NOT NULL,
                                              laps INTEGER NOT NULL)"))
