@@ -33,7 +33,6 @@ tabelaAvstralija16[7][tabelaAvstralija16[7] =="+1 lap"] <- NA
 tabelaAvstralija16[7][tabelaAvstralija16[7] =="+2 laps"] <- NA
 
 
-
 htmlBahrain16 <- html_session("https://www.formula1.com/en/results.html/2016/races/939/bahrain/race-result.html") %>% read_html
 html_tabelaBahrain16 <- htmlBahrain16 %>% html_nodes(xpath="//table[1]") %>% .[[1]]
 tabelaBahrain16 <- html_tabelaBahrain16%>% html_table()
@@ -365,10 +364,14 @@ tabelaGrandPrix16[grep(",", tabelaGrandPrix16[[1]]), 1] <- html_tabela %>%
 tabelaGrandPrix16<- tabelaGrandPrix16[-c(22),]
 tabelaGrandPrix16<- separate(tabelaGrandPrix16, Circuit, c("Circuit", "Town"), sep = ",", remove = TRUE,
                             convert = FALSE, extra = "warn", fill = "warn")
+tabelaGrandPrix16<-tabelaGrandPrix16[-c(6)]
 colnames(tabelaGrandPrix16) <- c("Round","Name","Circuit.Name","Town","Date")
 tabelaGrandPrix16$Circuit.Length <- c("5.303", "5.412", "5.451","5.848", "4.655","3.337", "4.361","6.003", "4.326","5.891", "4.381", "4.574", "7.004", "5.793", "	5.065", "5.543", "5.807", "5.516", "4.304", "4.309", "5.554")
 tabelaGrandPrix16$Laps <- c("58", "57", "56", "53", "66", "78", "70", "51", "71", "52", "70", "67", "44", "53", "61", "56", "53", "56", "71", "71", "55")
 tabelaGrandPrix16$Date<- c("2016-3-20", "2016-4-3", "2016-4-17", "2016-5-1", "2016-5-15", "2016-5-29", "2016-6-12", "2016-6-16", "2016-7-3", "2016-7-10", "2016-7-24", "2016-7-31", "2016-8-28", "2016-9-4", "2016-9-18", "2016-10-2", "2016-10-9", "2016-10-23", "2016-10-30", "2016-11-13", "2016-11-27")
+
+
+
 
 #tabela ekip
 
