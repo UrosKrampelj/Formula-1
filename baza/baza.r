@@ -86,8 +86,8 @@ create_table <- function(){
     
     grand_prix <- dbSendQuery(conn,build_sql("CREATE TABLE grand_prix (
                                              round INTEGER PRIMARY KEY,
-                                             circuit_name TEXT NOT NULL,
                                              name TEXT NOT NULL UNIQUE,
+                                             circuit_name TEXT NOT NULL,
                                              town TEXT NOT NULL,
                                              date DATE NOT NULL,
                                              circuit_length DECIMAL NOT NULL,
@@ -116,6 +116,7 @@ create_table <- function(){
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO jurez WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO urosk WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO domenh WITH GRANT OPTION"))
+    dbSendQuery(conn, build_sql("GRANT SELECT ON ALL TABLES IN SCHEMA public TO javnost"))
     
   }, finally = {
     # Na koncu nujno prekinemo povezavo z bazo,
