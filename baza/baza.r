@@ -23,9 +23,7 @@ delete_table <- function(){
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS team CASCADE"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS results"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS grand_prix"))
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS result"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS has"))
-    dbSendQuery(conn,build_sql('DROP TABLE IF EXISTS "results_AbuDhabi" '))
   }, finally = {
     dbDisconnect(conn)
   })
@@ -42,9 +40,10 @@ pravice <- function(){
     
     dbSendQuery(conn, build_sql("GRANT CONNECT ON DATABASE sem2017_jurez TO urosk WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT CONNECT ON DATABASE sem2017_jurez TO domenh WITH GRANT OPTION"))
+    dbSendQuery(conn, build_sql("GRANT SELECT ON ALL TABLES IN SCHEMA public TO urosk"))
+    dbSendQuery(conn, build_sql("GRANT SELECT ON ALL TABLES IN SCHEMA public TO domenh"))
     dbSendQuery(conn, build_sql("GRANT ALL ON SCHEMA public TO urosk WITH GRANT OPTION"))
     dbSendQuery(conn, build_sql("GRANT ALL ON SCHEMA public TO domenh WITH GRANT OPTION"))
-    dbSendQuery(conn, build_sql("GRANT SELECT ON ALL TABLES IN SCHEMA public TO javnost"))
     
     
   }, finally = {
@@ -104,7 +103,7 @@ create_table <- function(){
                                          position INTEGER,
                                          car_number INTEGER REFERENCES driver(car_number),
                                          laps INTEGER,
-                                         time VARCHAR(11) NOT NULL,
+                                         time VARCHAR(11),
                                          points INTEGER,
                                          grand_prix INTEGER REFERENCES grand_prix(round),
                                          start_position INTEGER NOT NULL)"))
