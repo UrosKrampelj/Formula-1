@@ -16,16 +16,21 @@ shinyServer(function(input, output) {
   tbl.grand_prix <- tbl(conn, "grand_prix")
   tbl.results <- tbl(conn, "results")
   tbl.has <- tbl(conn, "has")
-  
-  output$rezultati <- renderTable({
-    
-    t <- tbl.results %>% filter(circuit <= input$st.dirk) %>% data.frame()
+  drzave <- distinct(tbl.driver %>% select(country))
+
+  output$tocke <- renderTable({
+
+    t <- tbl.results %>% filter(grand_prix == input$st.dirk)
     validate(need(nrow(t) > 0, "Vaši poizvedbi ne ustreza noben podatek."))
     Encoding(t) <- "UTF-8"
     t
-    
+
   })
-  
+
+  output$country <- renderTable({
+    t <- tbl.driver  %>% filter(country == input$drzava) %>% select(name, surname, car_number, age, height, weight) %>% data.frame() 
+    t
+  })
   
   
   
