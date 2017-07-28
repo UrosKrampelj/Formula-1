@@ -10,6 +10,45 @@ shinyUI(fluidPage(
   
   tabsetPanel(
     
+    
+    tabPanel("Grand prixs",
+             sidebarLayout(
+               sidebarPanel(
+                 selectInput("gran_prix", "Grand prix:", 
+                             choices= c("Australian Grand Prix", "Bahrain Grand Prix", "Chinese Grand Prix", "Russian Grand Prix", "Spanish Grand Prix", "Monaco Grand Prix",
+                                        "Canadian Grand Prix", "European Grand Prix", "Austrian Grand Prix", "British Grand Prix", "Hungarian Grand Prix", "German Grand Prix", 
+                                        "Belgian Grand Prix", "	Italian Grand Prix", "Singapore Grand Prix", "Malaysian Grand Prix", "Japanese Grand Prix", "United States Grand Prix", 
+                                        "Mexican Grand Prix", "Brazilian Grand Prix", "Abu Dhabi Grand Prix")),
+                 hr(),
+                 helpText("Choose gran prix.")
+               ),
+               
+               mainPanel(
+                 tableOutput("grand_prix") 
+               )
+             )
+    ),
+    
+    #################################################################
+    
+    
+    tabPanel("Teams",
+             sidebarLayout(
+               sidebarPanel(
+                 selectInput("teams", "Team name:", 
+                             choices= c("Scuderia Ferrari", "Sahara Force India Formula One Team", "Haas F1 Team", "McLaren Honda Formula 1 Team", "Mercedes AMG Petronas Formula One Team", "Manor Racing MRT",
+                                        "Red Bull Racing", "Renault Sport Formula One Team", "Sauber F1 Team", "Scuderia Toro Rosso", "Williams Martini Racing")),
+                 hr(),
+                 helpText("Choose team name.")
+               ),
+               
+               mainPanel(
+                 tableOutput("teams") 
+               )
+             )
+    ),
+    
+    #################################################################
     tabPanel("Country/Driver",
              sidebarLayout(
                sidebarPanel(
@@ -48,7 +87,28 @@ shinyUI(fluidPage(
   ),
   
   #################################################################
- 
+  
+  tabPanel("Results",
+           sidebarLayout(
+             sidebarPanel(
+               selectInput("results", "Grand prix:", 
+                           choices= c("Australian Grand Prix", "Bahrain Grand Prix", "Chinese Grand Prix", "Russian Grand Prix", "Spanish Grand Prix", "Monaco Grand Prix",
+                                      "Canadian Grand Prix", "European Grand Prix", "Austrian Grand Prix", "British Grand Prix", "Hungarian Grand Prix", "German Grand Prix", 
+                                      "Belgian Grand Prix", "	Italian Grand Prix", "Singapore Grand Prix", "Malaysian Grand Prix", "Japanese Grand Prix", "United States Grand Prix", 
+                                      "Mexican Grand Prix", "Brazilian Grand Prix", "Abu Dhabi Grand Prix")),
+               hr(),
+               helpText("Choose gran prix.")
+             ),
+             
+             mainPanel(
+               tableOutput("results") 
+             )
+           )
+  ),
+  
+  
+  #################################################################
+  
    tabPanel("Točke",
            sidebarLayout(
              sidebarPanel(

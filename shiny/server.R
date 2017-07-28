@@ -41,6 +41,31 @@ shinyServer(function(input, output) {
   })
 
   
+  output$grand_prix<- renderTable({
+    c <-tbl.grand_prix %>% filter(name == input$gran_prix) %>% select(round, official_name,circuit_name, date, circuit_length,laps) %>% data.frame()
+    Encoding(c$circuit_name) <- "UTF-8"
+    Encoding(c$official_name) <- "UTF-8"
+    c
+  })
+  
+  
+  output$teams<- renderTable({
+    d <-tbl.team %>% filter(team_name == input$teams) %>% select(country, constructor,chassis, power_unit) %>% data.frame()
+    d
+  })
+  
+
+  ee<- inner_join(tbl.grand_prix,tbl.results,by=c("round"="grand_prix"))
+  eee <- inner_join(tbl.driver,ee,by=c("car_number"="car_number"))
+  eeee<- inner_join(eee,tbl.has,by=c("car_number"="driver"))
+  eeeee<-inner_join(tbl.team,eeee,by=c("id"="team"))
+
+  output$results<- renderTable({
+    e <-eeeee %>% filter(name.y == input$results) %>% select(position,start_position,car_number,name.x,surname,laps.x,time, points,team_name) %>% data.frame()
+    e
+  })
+  
+  
   output$tocke <- renderTable({
     
     t <- tbl.results %>% filter(grand_prix == input$st.dirk)
