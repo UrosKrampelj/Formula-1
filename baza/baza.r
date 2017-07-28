@@ -85,8 +85,8 @@ create_table <- function(){
     
     grand_prix <- dbSendQuery(conn,build_sql("CREATE TABLE grand_prix (
                                              round INTEGER PRIMARY KEY,
-                                             name TEXT NOT NULL UNIQUE,
                                              circuit_name TEXT NOT NULL,
+                                             name TEXT NOT NULL UNIQUE,
                                              town TEXT NOT NULL,
                                              date DATE NOT NULL,
                                              circuit_length DECIMAL NOT NULL,
