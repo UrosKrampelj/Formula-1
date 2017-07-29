@@ -109,18 +109,18 @@ shinyUI(fluidPage(
   
   #################################################################
   
-   tabPanel("Točke",
+   tabPanel("Points Driver",
            sidebarLayout(
              sidebarPanel(
-               sliderInput("st.dirk",
-                           "Izberi število dirk",
+               sliderInput("points",
+                           "Choose round.",
                            min = 1,
                            max = 21,
                            value = 21)
              ),
              
              mainPanel(
-               tableOutput("output$tocke")
+               tableOutput("points")
              )
            )
   )

@@ -62,17 +62,20 @@ shinyServer(function(input, output) {
 
   output$results<- renderTable({
     e <-eeeee %>% filter(name.y == input$results) %>% select(position,start_position,car_number,name.x,surname,laps.x,time, points,team_name) %>% data.frame()
+    Encoding(e$surname) <- "UTF-8"
+    Encoding(e$name.x) <- "UTF-8"
     e
   })
   
   
-  output$tocke <- renderTable({
-    
-    t <- tbl.results %>% filter(grand_prix == input$st.dirk)
-    validate(need(nrow(t) > 0, "Vaši poizvedbi ne ustreza noben podatek."))
-    Encoding(t) <- "UTF-8"
-    t
-    
+  ff<-inner_join(tbl.driver,tbl.results,by=c("car_number"="car_number"))
+  fff<-inner_join(ff,tbl.has,by=c("car_number"="driver"))
+  ffff<-inner_join(fff,tbl.team,by=c("team"="id"))
+  output$points <- renderTable({
+    f<-ffff %>% filter(grand_prix <= input$points) %>%  group_by(car_number,name, surname,team_name)%>% summarise(points = sum(points)) %>% data.frame()
+    Encoding(f$surname) <- "UTF-8"
+    Encoding(f$name) <- "UTF-8"
+    f
   })
   
 })
