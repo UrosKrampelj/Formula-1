@@ -123,6 +123,24 @@ shinyUI(fluidPage(
                tableOutput("points")
              )
            )
+  ),
+  
+  #################################################################
+  
+  tabPanel("Points Team",
+           sidebarLayout(
+             sidebarPanel(
+               sliderInput("points1",
+                           "Choose round.",
+                           min = 1,
+                           max = 21,
+                           value = 21)
+             ),
+             
+             mainPanel(
+               tableOutput("points1")
+             )
+           )
   )
   )
   )

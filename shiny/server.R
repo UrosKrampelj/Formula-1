@@ -72,10 +72,24 @@ shinyServer(function(input, output) {
   fff<-inner_join(ff,tbl.has,by=c("car_number"="driver"))
   ffff<-inner_join(fff,tbl.team,by=c("team"="id"))
   output$points <- renderTable({
-    f<-ffff %>% filter(grand_prix <= input$points) %>%  group_by(car_number,name, surname,team_name)%>% summarise(points = sum(points)) %>% data.frame()
+    f<-ffff %>% filter(grand_prix <= input$points) %>% group_by(car_number,name, surname,team_name) %>% summarise(points = sum(points)) %>% data.frame()
+    f <- f[order(-f$points),]
+    f["place"]<-NA
+    f$place<-(1:nrow(f))
     Encoding(f$surname) <- "UTF-8"
     Encoding(f$name) <- "UTF-8"
     f
+  })
+  
+  
+  output$points1 <- renderTable({
+    g<-ffff %>% filter(grand_prix <= input$points1) %>% group_by(team_name, constructor, power_unit) %>% summarise(points = sum(points)) %>% data.frame()
+    g <- g[order(-g$points),]
+    g["place"]<-NA
+    g$place<-(1:nrow(g))
+    Encoding(g$team_name) <- "UTF-8"
+    Encoding(g$constructor) <- "UTF-8"
+    g
   })
   
 })
