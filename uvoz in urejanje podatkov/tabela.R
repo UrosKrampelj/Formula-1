@@ -394,10 +394,13 @@ ultimatetabela <- rbind(tabelaAvstralija16, tabelaBahrain16, tabelaChina16, tabe
                         tabelaJapan16, tabelaUnitedStates16, tabelaMexico16, tabelaBrazil16,
                         tabelaAbuDhabi16) %>% select(-Name, -Surname) %>%
   inner_join(tabelaGrandPrix16 %>% select(Round, Name), by = c("Circuit" = "Name")) %>%
-  mutate(Circuit = Round) %>% select(-Round)
+  mutate(Circuit = Round) %>% mutate(Circuit = as.numeric(Round))%>% select(-Round)
 
 data.has <- ultimatetabela %>% inner_join(tabelaekip, by = c("Car" = "Constructor")) %>%
   select(št, No) %>% distinct()
+
+data.has <- ultimatetabela %>% inner_join(tabelaekip, by = c("Car" = "Constructor")) %>%
+  group_by(št, No) %>% summarise(first = min(Circuit), last = max(Circuit))
 
 ultimatetabela <- ultimatetabela %>% select(-Car)
 

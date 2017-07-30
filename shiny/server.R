@@ -70,6 +70,7 @@ shinyServer(function(input, output) {
 
   output$results<- renderTable({
     e <-eeeee %>% filter(name.y == input$results) %>% select(position,start_position,car_number,name.x,surname,laps.x,time, points,team_name) %>% data.frame()
+    e <-e %>% filter(last >= round >= first)
     e<-e %>% rename(Position = position, `Start position`= start_position, `Car number` = car_number,
                     Name = name.x, Surname = surname, Laps=laps.x, Time=time, Points=points,`Team name`=team_name)
     Encoding(e$Surname) <- "UTF-8"
