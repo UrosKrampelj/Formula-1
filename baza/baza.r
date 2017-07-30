@@ -104,7 +104,7 @@ create_table <- function(){
                                          position INTEGER,
                                          car_number INTEGER REFERENCES driver(car_number),
                                          laps INTEGER,
-                                         time VARCHAR(11),
+                                         time INTERVAL,
                                          points INTEGER,
                                          grand_prix INTEGER REFERENCES grand_prix(round),
                                          start_position INTEGER NOT NULL)"))

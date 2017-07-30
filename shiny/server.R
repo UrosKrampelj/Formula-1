@@ -25,8 +25,10 @@ shinyServer(function(input, output) {
   
   output$country <- renderTable({
     a <- aaa  %>% filter(country.x == input$drzava) %>% select(name, surname, car_number, age, height, weight,team_name) %>% data.frame() 
-    Encoding(a$name) <- "UTF-8"
-    Encoding(a$surname) <- "UTF-8"
+    a<-a %>% rename(Name = name, Surname = surname,
+                    `Car number` = car_number, Age=age, Height=height, Weight=weight, `Team name`=team_name)
+    Encoding(a$Name) <- "UTF-8"
+    Encoding(a$Surname) <- "UTF-8"
     a
   })
   
@@ -34,23 +36,29 @@ shinyServer(function(input, output) {
   bbb<- inner_join(tbl.driver,bb,by=c("car_number"="driver"))
   
   output$team_driver<- renderTable({
-    b <-bbb %>% filter(team_name == input$ekipa_dirkac) %>% select(name, surname, car_number, age, height, weight,country.x) %>% data.frame()
-    Encoding(b$surname) <- "UTF-8"
-    Encoding(b$name) <- "UTF-8"
+    b <- bbb %>% filter(team_name == input$ekipa_dirkac) %>% select(name, surname, car_number, age, height, weight,country.x) %>% data.frame()
+    b <- b %>% rename(Name = name, Surname = surname,
+               `Car number` = car_number, Age=age, Height=height, Weight=weight, `Country`=country.x) 
+    Encoding(b$Surname) <- "UTF-8"
+    Encoding(b$Name) <- "UTF-8"
     b
   })
 
-  
   output$grand_prix<- renderTable({
-    c <-tbl.grand_prix %>% filter(name == input$gran_prix) %>% select(round, official_name,circuit_name, date, circuit_length,laps) %>% data.frame()
-    Encoding(c$circuit_name) <- "UTF-8"
-    Encoding(c$official_name) <- "UTF-8"
-    c
+    h <-tbl.grand_prix %>% filter(name == input$gran_prix) %>% select(round, official_name,circuit_name, date, circuit_length,laps) %>% data.frame()
+    h$date <- as.character(h$date)
+    h <- h %>% rename(Name = round, `Official name` = official_name	,
+                      `Circuit name` = circuit_name, Date=date, `Circuit length (km)`=circuit_length, Laps=laps) 
+    Encoding(h$`Circuit name`) <- "UTF-8"
+    Encoding(h$`Official name`) <- "UTF-8"
+    h
   })
   
   
   output$teams<- renderTable({
     d <-tbl.team %>% filter(team_name == input$teams) %>% select(country, constructor,chassis, power_unit) %>% data.frame()
+    d<-d %>% rename(Country = country, Constructor = constructor,
+                 Chassis = chassis, `Power unit` = power_unit)
     d
   })
   
@@ -62,8 +70,10 @@ shinyServer(function(input, output) {
 
   output$results<- renderTable({
     e <-eeeee %>% filter(name.y == input$results) %>% select(position,start_position,car_number,name.x,surname,laps.x,time, points,team_name) %>% data.frame()
-    Encoding(e$surname) <- "UTF-8"
-    Encoding(e$name.x) <- "UTF-8"
+    e<-e %>% rename(Position = position, `Start position`= start_position, `Car number` = car_number,
+                    Name = name.x, Surname = surname, Laps=laps.x, Time=time, Points=points,`Team name`=team_name)
+    Encoding(e$Surname) <- "UTF-8"
+    Encoding(e$Name) <- "UTF-8"
     e
   })
   
@@ -76,8 +86,10 @@ shinyServer(function(input, output) {
     f <- f[order(-f$points),]
     f["place"]<-NA
     f$place<-(1:nrow(f))
-    Encoding(f$surname) <- "UTF-8"
-    Encoding(f$name) <- "UTF-8"
+    f <- f %>% rename(`Car number` = car_number, Name = name, Surname = surname,
+                      `Team name`= team_name, Points=points, Place=place)
+    Encoding(f$Surname) <- "UTF-8"
+    Encoding(f$Name) <- "UTF-8"
     f
   })
   
@@ -87,8 +99,9 @@ shinyServer(function(input, output) {
     g <- g[order(-g$points),]
     g["place"]<-NA
     g$place<-(1:nrow(g))
-    Encoding(g$team_name) <- "UTF-8"
-    Encoding(g$constructor) <- "UTF-8"
+    g<-g %>% rename(`Team name`=team_name, Constructor=constructor, `Power unit`=power_unit, Points=points, Place=place)
+    Encoding(g$`Team name`) <- "UTF-8"
+    Encoding(g$Constructor) <- "UTF-8"
     g
   })
   

@@ -401,6 +401,14 @@ data.has <- ultimatetabela %>% inner_join(tabelaekip, by = c("Car" = "Constructo
 
 ultimatetabela <- ultimatetabela %>% select(-Car)
 
+options(digits.secs = 3)
+ultimatetabela <- inner_join(ultimatetabela, ultimatetabela %>% filter(Pos == 1) %>%
+                               select(prvi = `Time/Retired`, Circuit)) %>%
+  mutate(`Time/Retired` = (as.POSIXct(prvi, format = "%H:%M:%OS") +
+                             ifelse(Pos == 1, 0,
+                                    gsub(".*?([0-9.]+).*", "\\1", `Time/Retired`)) %>%
+                             as.numeric()) %>% strftime("%H:%M:%OS")) %>% select(-prvi)
+
 #tabela dirkačev
 
 uvozitabeladirkacev <- function(){
