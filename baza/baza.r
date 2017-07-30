@@ -22,7 +22,7 @@ delete_table <- function(){
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS driver CASCADE"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS team CASCADE"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS results"))
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS grand_prix"))
+    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS grand_prix CASCADE"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS has"))
   }, finally = {
     dbDisconnect(conn)
@@ -98,6 +98,8 @@ create_table <- function(){
     has <- dbSendQuery(conn,build_sql("CREATE TABLE has (
                                          team INTEGER NOT NULL REFERENCES team(id),
                                          driver INTEGER NOT NULL REFERENCES driver(car_number),
+                                         first INTEGER NOT NULL REFERENCES grand_prix(round),
+                                         last INTEGER NOT NULL REFERENCES grand_prix(round),
                                          PRIMARY KEY (team,driver))"))
     
     results <- dbSendQuery(conn,build_sql("CREATE TABLE results (
