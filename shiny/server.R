@@ -24,7 +24,9 @@ shinyServer(function(input, output) {
   aaa<- inner_join(aa,tbl.team,by=c("team"="id")) 
   
   output$country <- renderTable({
-    a <- aaa  %>% filter(country.x == input$drzava) %>% select(name, surname, car_number, age, height, weight,team_name) %>% data.frame() 
+    a <- aaa %>% filter(country.x == input$drzava) %>%
+      group_by(name, surname, car_number, age, height, weight) %>%
+      summarise(team_name = paste(team_name, collapse = ", ")) %>% data.frame()
     a<-a %>% rename(Name = name, Surname = surname,
                     `Car number` = car_number, Age=age, Height=height, Weight=weight, `Team name`=team_name)
     Encoding(a$Name) <- "UTF-8"
@@ -69,8 +71,9 @@ shinyServer(function(input, output) {
   eeeee<-inner_join(tbl.team,eeee,by=c("id"="team"))
 
   output$results<- renderTable({
-    e <-eeeee %>% filter(name.y == input$results) %>% select(position,start_position,car_number,name.x,surname,laps.x,time, points,team_name) %>% data.frame()
-    e <-e %>% filter(last >= round >= first)
+    e <- eeeee %>% filter(name.y == input$results, last >= round, round >= first) %>%
+      select(position,start_position,car_number,name.x,surname,laps.x,time, points,team_name) %>%
+      data.frame()
     e<-e %>% rename(Position = position, `Start position`= start_position, `Car number` = car_number,
                     Name = name.x, Surname = surname, Laps=laps.x, Time=time, Points=points,`Team name`=team_name)
     Encoding(e$Surname) <- "UTF-8"

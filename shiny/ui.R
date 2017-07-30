@@ -17,7 +17,7 @@ shinyUI(fluidPage(
                  selectInput("gran_prix", "Grand prix:", 
                              choices= c("Australian Grand Prix", "Bahrain Grand Prix", "Chinese Grand Prix", "Russian Grand Prix", "Spanish Grand Prix", "Monaco Grand Prix",
                                         "Canadian Grand Prix", "European Grand Prix", "Austrian Grand Prix", "British Grand Prix", "Hungarian Grand Prix", "German Grand Prix", 
-                                        "Belgian Grand Prix", "	Italian Grand Prix", "Singapore Grand Prix", "Malaysian Grand Prix", "Japanese Grand Prix", "United States Grand Prix", 
+                                        "Belgian Grand Prix", "Italian Grand Prix", "Singapore Grand Prix", "Malaysian Grand Prix", "Japanese Grand Prix", "United States Grand Prix", 
                                         "Mexican Grand Prix", "Brazilian Grand Prix", "Abu Dhabi Grand Prix")),
                  hr(),
                  helpText("Choose gran prix.")
@@ -94,7 +94,7 @@ shinyUI(fluidPage(
                selectInput("results", "Grand prix:", 
                            choices= c("Australian Grand Prix", "Bahrain Grand Prix", "Chinese Grand Prix", "Russian Grand Prix", "Spanish Grand Prix", "Monaco Grand Prix",
                                       "Canadian Grand Prix", "European Grand Prix", "Austrian Grand Prix", "British Grand Prix", "Hungarian Grand Prix", "German Grand Prix", 
-                                      "Belgian Grand Prix", "	Italian Grand Prix", "Singapore Grand Prix", "Malaysian Grand Prix", "Japanese Grand Prix", "United States Grand Prix", 
+                                      "Belgian Grand Prix", "Italian Grand Prix", "Singapore Grand Prix", "Malaysian Grand Prix", "Japanese Grand Prix", "United States Grand Prix", 
                                       "Mexican Grand Prix", "Brazilian Grand Prix", "Abu Dhabi Grand Prix")),
                hr(),
                helpText("Choose gran prix.")
